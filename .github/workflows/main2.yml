@@ -1,0 +1,75 @@
+name: Environment Test Workflow
+
+on:
+
+  # Manual Trigger
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Select Environment
+        required: true
+        type: environment
+
+  # Scheduled Trigger
+  schedule:
+    - cron: '*/5 * * * *'
+
+jobs:
+
+  # =========================================================
+  # MANUAL TEST
+  # =========================================================
+  manual-test:
+
+    if: github.event_name == 'workflow_dispatch'
+
+    runs-on: ubuntu-latest
+
+    environment: ${{ github.event.inputs.environment }}
+
+    env:
+      MY_VAR_1: ${{ vars.MY_VAR_1 }}
+      MY_VAR_2: ${{ vars.MY_VAR_2 }}
+
+    steps:
+
+      - name: Print Manual Environment Details
+        run: |
+          echo "===== MANUAL RUN ====="
+          echo "Environment: ${{ github.event.inputs.environment }}"
+          echo "MY_VAR_1: $MY_VAR_1"
+          echo "MY_VAR_2: $MY_VAR_2"
+
+
+
+  # =========================================================
+  # SCHEDULE TEST
+  # =========================================================
+  scheduled-test:
+
+    if: github.event_name == 'schedule'
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        environment:
+          - UAT1
+          - UAT2
+          - UAT3
+          - UAT4
+
+    environment: ${{ matrix.environment }}
+
+    env:
+      MY_VAR_1: ${{ vars.MY_VAR_1 }}
+      MY_VAR_2: ${{ vars.MY_VAR_2 }}
+
+    steps:
+
+      - name: Print Scheduled Environment Details
+        run: |
+          echo "===== SCHEDULED RUN ====="
+          echo "Environment: ${{ matrix.environment }}"
+          echo "MY_VAR_1: $MY_VAR_1"
+          echo "MY_VAR_2: $MY_VAR_2"
