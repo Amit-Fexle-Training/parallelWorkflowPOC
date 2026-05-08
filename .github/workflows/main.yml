@@ -12,8 +12,8 @@ on:
 
   # Scheduled Trigger
   schedule:
-    - cron: '20 11 * * *'
-    - cron: '35 11 * * *'
+    - cron: '5 12 * * *'
+    - cron: '20 12 * * *'
     - cron: '*/5 * * * *'
 
 jobs:
