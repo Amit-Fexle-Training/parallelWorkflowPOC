@@ -11,10 +11,10 @@ on:
         type: environment
 
   # Scheduled Trigger
-  schedule:
-    - cron: '5 12 * * *'
-    - cron: '20 12 * * *'
-    - cron: '*/5 * * * *'
+  # schedule:
+  #   - cron: '5 12 * * *'
+  #   - cron: '20 12 * * *'
+  #   - cron: '*/5 * * * *'
 
 jobs:
 
